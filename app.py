@@ -10,7 +10,10 @@ from langchain_core.output_parsers import StrOutputParser
 
 load_dotenv()
 
-video_id = "Lr5yJYlWMao"     #only the id not full url
+url = input("Enter YouTube URL: ")
+video_id = url.split("v=")[1].split("&")[0]  #it will extract the video id
+
+   
 try:
     youtube_api = YouTubeTranscriptApi()
     transcript_list = youtube_api.fetch(video_id, languages=["en"])     
