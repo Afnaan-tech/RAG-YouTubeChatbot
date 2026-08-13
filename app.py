@@ -29,7 +29,7 @@ chunks=splitter.create_documents([transcript])
 embedding_model = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 vector_store=FAISS.from_documents(chunks,embedding_model)
 
-retriever=vector_store.as_retriever(search_type="similarity",search_kwargs={"k":4})#returns 4 most relevant chunks
+retriever=vector_store.as_retriever(search_type="mmr",search_kwargs={"k":4,"fetch_k":20})#returns 4 most relevant chunks
 
 prompt=PromptTemplate(template="YOU ARE A HELPFUL AI ASSISTANT ANSWER ONLY FROM THE PROVIDED TRANSCRIPT   {context} QUESTION:{question}",input_variables=['context','question'])
 llm=ChatGoogleGenerativeAI(model="gemini-3.6-flash")
@@ -45,10 +45,11 @@ chain1=RunnableParallel({
     "context":retriever | RunnableLambda(format_docs),
     "question":RunnablePassthrough()
 })
+
 chain2= prompt | llm | parser
 final_chain=chain1 | chain2
 
 
-question="summarize what is happening in the video"
+question=input("what would you like to know about the video?: ")
 result=final_chain.invoke(question)
 print(result)
