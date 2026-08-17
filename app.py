@@ -49,7 +49,9 @@ chain1=RunnableParallel({
 chain2= prompt | llm | parser
 final_chain=chain1 | chain2
 
-
-question=input("what would you like to know about the video?: ")
-result=final_chain.invoke(question)
-print(result)
+while True:
+    question=input("what would you like to know about the video?(type exit to stop):")
+    if question.lower()=="exit":
+            break
+    result=final_chain.invoke(question)
+    print(result)
