@@ -9,5 +9,4 @@ The project uses Retrieval-Augmented Generation (RAG) to retrieve relevant parts
 🗄️ Stores embeddings in a FAISS vector database
 🔎 Retrieves relevant transcript sections for each question
 🤖 Uses Gemini to generate answers
-💬 Simple Streamlit interface
 🔐 API keys stored securely using .env
